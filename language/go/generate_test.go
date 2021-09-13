@@ -16,6 +16,7 @@ limitations under the License.
 package golang
 
 import (
+	"fmt"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -69,6 +70,7 @@ func TestGenerateRules(t *testing.T) {
 				empty = append(empty, res.Empty...)
 				gen = append(gen, res.Gen...)
 			}
+
 			isTest := false
 			for _, name := range regularFiles {
 				if name == "BUILD.want" {
@@ -76,6 +78,8 @@ func TestGenerateRules(t *testing.T) {
 					break
 				}
 			}
+			fmt.Fprintln(os.Stderr, "Testing dir: ", rel)
+
 			if !isTest {
 				// GenerateRules may have side effects, so we need to run it, even if
 				// there's no test.
